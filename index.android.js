@@ -52,7 +52,7 @@ class SaldoAndroid extends Component{
       password: password
     })
   }
-  
+
   _onPress() {
     console.log("state", this.state)
   }
@@ -67,7 +67,7 @@ class SaldoAndroid extends Component{
           onChangeText={this._password.bind(this)} />
         <TouchableHighlight style={styles.button} 
           onPress={this._onPress.bind(this)} underlayColor='#99d9f4'>
-          <Text style={styles.buttonText}>Save</Text>
+          <Text style={styles.buttonText}>Submit</Text>
         </TouchableHighlight>
         <View style={styles.select}>
           <Text>User Name / Domain Name</Text>

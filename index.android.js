@@ -5,7 +5,9 @@ var {
   AppRegistry,
   StyleSheet,
   Text,
+  TextInput,
   View,
+  TouchableHighlight,
 } = React
 
 const DropDown = require('react-native-dropdown')
@@ -20,17 +22,16 @@ const {
 
 class SaldoAndroid extends Component{
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
-      canada: '',
-      usa: ''
-    };
+      domain: '',
+      password: '',
+    }
   }
-  componentDidMount() {
-    updatePosition(this.refs['SELECT1'])
-    updatePosition(this.refs['SELECT2'])
 
+  componentDidMount() {
+    updatePosition(this.refs['selectDomain'])
     updatePosition(this.refs['OPTIONLIST'])
   }
 
@@ -38,54 +39,88 @@ class SaldoAndroid extends Component{
     return this.refs['OPTIONLIST']
   }
 
-  _usa(state) {
+  _domain(domain) {
     this.setState({
       ...this.state,
-      usa: state
+      domain: domain
     })
   }
 
-  _canada(province) {
-
-
+  _password(password) {
     this.setState({
       ...this.state,
-      canada: province
+      password: password
     })
+  }
+  
+  _onPress() {
+    console.log("state", this.state)
   }
 
   render() {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Select
-            width={250}
-            ref="SELECT1"
-            optionListRef={this._getOptionList.bind(this)}
-            defaultValue="Select a Province in Canada ..."
-            onSelect={this._canada.bind(this)}>
-            <Option>Alberta</Option>
-            <Option>British Columbia</Option>
-            <Option>Manitoba</Option>
+      <View>
+        <Text>Password</Text>
+        <TextInput 
+          secureTextEntry 
+          style={styles.inputPassword}
+          onChangeText={this._password.bind(this)} />
+        <TouchableHighlight style={styles.button} 
+          onPress={this._onPress.bind(this)} underlayColor='#99d9f4'>
+          <Text style={styles.buttonText}>Save</Text>
+        </TouchableHighlight>
+        <View style={styles.select}>
+          <Text>User Name / Domain Name</Text>
+          <Select 
+            name="domain"
+            style={styles.inputSelect}
+            ref="selectDomain" 
+            optionListRef={this._getOptionList.bind(this)} 
+            defaultValue="Select a domain ..." 
+            onSelect={this._domain.bind(this)} >
+            <Option>Uganda Police</Option>
+            <Option>K.C..C.A</Option>
+            <Option>ID Validation Protocal</Option>
           </Select>
 
-          <View style={{ height: 10 }}/>
-
-          <Select
-            width={250}
-            ref="SELECT2"
-            optionListRef={this._getOptionList.bind(this)}
-            defaultValue="Select a State in USA ..."
-            onSelect={this._usa.bind(this)}>
-            <option>Alabama</option>
-            <option>Alaska</option>
-            <option>Arizona</option>
-          </Select>
-
-          <View style={{ height: 20 }}></View>
+          <View style={styles.optionList}/>
           <OptionList ref="OPTIONLIST"/>
+        </View>
       </View>
     )
   }
 }
+
+var styles = StyleSheet.create({
+  select: {
+    flex: 1,
+  },
+  inputSelect: {
+    width: 250,
+  },
+  optionList: {
+    height: 10,
+  },
+  inputPassword: {
+    height: 40,
+    borderColor: 'gray', 
+    borderWidth: 1,
+  },
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    alignSelf: 'center'
+  },
+  button: {
+    height: 36,
+    backgroundColor: '#48BBEC',
+    borderColor: '#48BBEC',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 10,
+    alignSelf: 'stretch',
+    justifyContent: 'center'
+  }
+})
 
 AppRegistry.registerComponent('SaldoAndroid', () => SaldoAndroid)
